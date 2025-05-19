@@ -1,0 +1,371 @@
+openapi: 3.1.0
+info:
+  title: Naver Search API Wrapper
+  description: API that wraps Naver's search API for blogs, news, cafe articles, and more.
+  version: 1.0.0
+servers:
+  - url: https://naver-search-sooty.vercel.app
+    description: Local development server
+paths:
+  /search/blog:
+    get:
+      operationId: searchBlog
+      summary: Search blogs using Naver API.
+      parameters:
+        - name: query
+          in: query
+          required: true
+          description: The search query.
+          schema:
+            type: string
+        - name: display
+          in: query
+          required: false
+          description: The number of search results to display.
+          schema:
+            type: integer
+        - name: start
+          in: query
+          required: false
+          description: The starting point of the search results.
+          schema:
+            type: integer
+        - name: sort
+          in: query
+          required: false
+          description: Sorting option for results (sim, date).
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful blog search
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        link:
+                          type: string
+                        description:
+                          type: string
+                        bloggername:
+                          type: string
+                        bloggerlink:
+                          type: string
+  /search/news:
+    get:
+      operationId: searchNews
+      summary: Search news articles using Naver API.
+      parameters:
+        - name: query
+          in: query
+          required: true
+          description: The search query.
+          schema:
+            type: string
+        - name: display
+          in: query
+          required: false
+          description: The number of search results to display.
+          schema:
+            type: integer
+        - name: start
+          in: query
+          required: false
+          description: The starting point of the search results.
+          schema:
+            type: integer
+        - name: sort
+          in: query
+          required: false
+          description: Sorting option for results (sim, date).
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful news search
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        originallink:
+                          type: string
+                        link:
+                          type: string
+                        description:
+                          type: string
+  /search/cafearticle:
+    get:
+      operationId: searchCafeArticle
+      summary: Search cafe articles using Naver API.
+      parameters:
+        - name: query
+          in: query
+          required: true
+          description: The search query.
+          schema:
+            type: string
+        - name: display
+          in: query
+          required: false
+          description: The number of search results to display.
+          schema:
+            type: integer
+        - name: start
+          in: query
+          required: false
+          description: The starting point of the search results.
+          schema:
+            type: integer
+        - name: sort
+          in: query
+          required: false
+          description: Sorting option for results (sim, date).
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful cafe article search
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        link:
+                          type: string
+                        description:
+                          type: string
+                        cafename:
+                          type: string
+                        cafeurl:
+                          type: string
+  /search/kin:
+    get:
+      operationId: searchKin
+      summary: Search Knowledge-In articles using Naver API.
+      parameters:
+        - name: query
+          in: query
+          required: true
+          description: The search query.
+          schema:
+            type: string
+        - name: display
+          in: query
+          required: false
+          description: The number of search results to display.
+          schema:
+            type: integer
+        - name: start
+          in: query
+          required: false
+          description: The starting point of the search results.
+          schema:
+            type: integer
+        - name: sort
+          in: query
+          required: false
+          description: Sorting option for results (sim, date).
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful Knowledge-In search
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        link:
+                          type: string
+                        description:
+                          type: string
+  /search/webkr:
+    get:
+      operationId: searchWebkr
+      summary: Search Korean websites using Naver API.
+      parameters:
+        - name: query
+          in: query
+          required: true
+          description: The search query.
+          schema:
+            type: string
+        - name: display
+          in: query
+          required: false
+          description: The number of search results to display.
+          schema:
+            type: integer
+        - name: start
+          in: query
+          required: false
+          description: The starting point of the search results.
+          schema:
+            type: integer
+        - name: sort
+          in: query
+          required: false
+          description: Sorting option for results (sim, date).
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful website search
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        link:
+                          type: string
+                        description:
+                          type: string
+  /search/shop:
+    get:
+      operationId: searchShop
+      summary: Search shopping items using Naver API.
+      parameters:
+        - name: query
+          in: query
+          required: true
+          description: The search query.
+          schema:
+            type: string
+        - name: display
+          in: query
+          required: false
+          description: The number of search results to display.
+          schema:
+            type: integer
+        - name: start
+          in: query
+          required: false
+          description: The starting point of the search results.
+          schema:
+            type: integer
+        - name: sort
+          in: query
+          required: false
+          description: Sorting option for results (sim, date).
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful shopping item search
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        link:
+                          type: string
+                        image:
+                          type: string
+                        lprice:
+                          type: string
+                        hprice:
+                          type: string
+                        mallName:
+                          type: string
+                        productId:
+                          type: string
+                        productType:
+                          type: string
+                        brand:
+                          type: string
+                        maker:
+                          type: string
+                        category1:
+                          type: string
+                        category2:
+                          type: string
+                        category3:
+                          type: string
+                        category4:
+                          type: string
+  /search/doc:
+    get:
+      operationId: searchDoc
+      summary: Search documents using Naver API.
+      parameters:
+        - name: query
+          in: query
+          required: true
+          description: The search query.
+          schema:
+            type: string
+        - name: display
+          in: query
+          required: false
+          description: The number of search results to display.
+          schema:
+            type: integer
+        - name: start
+          in: query
+          required: false
+          description: The starting point of the search results.
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successful document search
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        link:
+                          type: string
+                        description:
+                          type: string
