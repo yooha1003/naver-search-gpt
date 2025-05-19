@@ -1,170 +1,80 @@
-// 네이버 검색 API 예제 - 블로그 검색
 const express = require("express");
+const axios = require("axios");
 const app = express();
 
-app.get("/search/blog", function (req, res) {
-  const { query, display, start, sort } = req.query;
-  var api_url = "https://openapi.naver.com/v1/search/blog?";
-  var request = require("request");
-  var options = {
-    url: api_url,
-    qs: { query, display, start, sort },
-    headers: {
-      "X-Naver-Client-Id": process.env.NAVER_CLIENT_ID,
-      "X-Naver-Client-Secret": process.env.NAVER_CLIENT_SECRET,
-    },
-  };
-  request.get(options, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-      res.writeHead(200, { "Content-Type": "text/json;charset=utf-8" });
-      res.end(body);
-    } else {
-      res.status(response.statusCode).end();
-      console.log("error = " + response.statusCode);
-    }
-  });
-});
+app.get("/", (req, res) => res.send("Express on Vercel"));
 
-app.get("/search/news", function (req, res) {
-  const { query, display, start, sort } = req.query;
-  var api_url = "https://openapi.naver.com/v1/search/news?";
-  var request = require("request");
-  var options = {
-    url: api_url,
-    qs: { query, display, start, sort },
-    headers: {
-      "X-Naver-Client-Id": process.env.NAVER_CLIENT_ID,
-      "X-Naver-Client-Secret": process.env.NAVER_CLIENT_SECRET,
-    },
-  };
-  request.get(options, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-      res.writeHead(200, { "Content-Type": "text/json;charset=utf-8" });
-      res.end(body);
-    } else {
-      res.status(response.statusCode).end();
-      console.log("error = " + response.statusCode);
-    }
-  });
-});
+// 네이버 검색 API 호출을 위한 공통 함수
+async function naverSearch(req, res, apiPath, extraQuery = {}) {
+  const params = { ...req.query, ...extraQuery };
+  const url = `https://openapi.naver.com/v1/search/${apiPath}`;
 
-app.get("/search/cafearticle", function (req, res) {
-  const { query, display, start, sort } = req.query;
-  var api_url = "https://openapi.naver.com/v1/search/cafearitcle?";
-  var request = require("request");
-  var options = {
-    url: api_url,
-    qs: { query, display, start, sort },
-    headers: {
-      "X-Naver-Client-Id": process.env.NAVER_CLIENT_ID,
-      "X-Naver-Client-Secret": process.env.NAVER_CLIENT_SECRET,
-    },
+  const headers = {
+    "X-Naver-Client-Id": process.env.NAVER_CLIENT_ID,
+    "X-Naver-Client-Secret": process.env.NAVER_CLIENT_SECRET,
   };
-  request.get(options, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-      res.writeHead(200, { "Content-Type": "text/json;charset=utf-8" });
-      res.end(body);
-    } else {
-      res.status(response.statusCode).end();
-      console.log("error = " + response.statusCode);
-    }
-  });
-});
 
-app.get("/search/kin", function (req, res) {
-  const { query, display, start, sort } = req.query;
-  var api_url = "https://openapi.naver.com/v1/search/kin?";
-  var request = require("request");
-  var options = {
-    url: api_url,
-    qs: { query, display, start, sort },
-    headers: {
-      "X-Naver-Client-Id": process.env.NAVER_CLIENT_ID,
-      "X-Naver-Client-Secret": process.env.NAVER_CLIENT_SECRET,
-    },
-  };
-  request.get(options, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-      res.writeHead(200, { "Content-Type": "text/json;charset=utf-8" });
-      res.end(body);
-    } else {
-      res.status(response.statusCode).end();
-      console.log("error = " + response.statusCode);
-    }
-  });
-});
+  // 인증 정보 누락 시 에러 처리
+  if (!headers["X-Naver-Client-Id"] || !headers["X-Naver-Client-Secret"]) {
+    return res.status(500).json({ error: "API 인증 정보가 누락되었습니다." });
+  }
 
-app.get("/search/webkr", function (req, res) {
-  const { query, display, start } = req.query;
-  var api_url = "https://openapi.naver.com/v1/search/webkr?";
-  var request = require("request");
-  var options = {
-    url: api_url,
-    qs: { query, display, start },
-    headers: {
-      "X-Naver-Client-Id": process.env.NAVER_CLIENT_ID,
-      "X-Naver-Client-Secret": process.env.NAVER_CLIENT_SECRET,
-    },
-  };
-  request.get(options, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-      res.writeHead(200, { "Content-Type": "text/json;charset=utf-8" });
-      res.end(body);
-    } else {
-      res.status(response.statusCode).end();
-      console.log("error = " + response.statusCode);
+  try {
+    const response = await axios.get(url, {
+      params: params,
+      headers: headers,
+    });
+    res.status(200).json(response.data);
+  } catch (error) {
+    console.error(`[${apiPath}] Error:`, error.message);
+    if (error.response) {
+      console.error(`[${apiPath}] Error response:`, error.response.data);
     }
-  });
-});
+    res.status(error.response ? error.response.status : 500).json({
+      error: error.message,
+      details: error.response ? error.response.data : null,
+    });
+  }
+}
 
-app.get("/search/shop", function (req, res) {
-  const { query, display, start, filter, exclude } = req.query;
-  var api_url = "https://openapi.naver.com/v1/search/shop?";
-  var request = require("request");
-  var options = {
-    url: api_url,
-    qs: { query, display, start, filter, exclude },
-    headers: {
-      "X-Naver-Client-Id": process.env.NAVER_CLIENT_ID,
-      "X-Naver-Client-Secret": process.env.NAVER_CLIENT_SECRET,
-    },
-  };
-  request.get(options, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-      res.writeHead(200, { "Content-Type": "text/json;charset=utf-8" });
-      res.end(body);
-    } else {
-      res.status(response.statusCode).end();
-      console.log("error = " + response.statusCode);
-    }
-  });
-});
+// 각 검색 엔드포인트 라우트 등록
+app.get("/search/blog", (req, res) =>
+  naverSearch(req, res, "blog")
+);
 
-app.get("/search/doc", function (req, res) {
-  const { query, display, start } = req.query;
-  var api_url = "https://openapi.naver.com/v1/search/doc?";
-  var request = require("request");
-  var options = {
-    url: api_url,
-    qs: { query, display, start },
-    headers: {
-      "X-Naver-Client-Id": process.env.NAVER_CLIENT_ID,
-      "X-Naver-Client-Secret": process.env.NAVER_CLIENT_SECRET,
-    },
-  };
-  request.get(options, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-      res.writeHead(200, { "Content-Type": "text/json;charset=utf-8" });
-      res.end(body);
-    } else {
-      res.status(response.statusCode).end();
-      console.log("error = " + response.statusCode);
-    }
-  });
-});
+app.get("/search/news", (req, res) =>
+  naverSearch(req, res, "news")
+);
 
-app.listen(3000, function () {
-  console.log(
-    "http://127.0.0.1:3000/search/kin?query=주식&display=10&start=1&sort=sim app listening on port 3000!"
+// cafearticle 오타 수정 (원래 cafearitcle → cafearticle)
+app.get("/search/cafearticle", (req, res) =>
+  naverSearch(req, res, "cafearticle")
+);
+
+app.get("/search/kin", (req, res) =>
+  naverSearch(req, res, "kin")
+);
+
+app.get("/search/webkr", (req, res) =>
+  naverSearch(req, res, "webkr")
+);
+
+app.get("/search/shop", (req, res) =>
+  naverSearch(req, res, "shop")
+);
+
+app.get("/search/doc", (req, res) =>
+  naverSearch(req, res, "doc")
+);
+
+// For local development
+if (process.env.NODE_ENV !== "production") {
+  const PORT = process.env.PORT || 3000;
+  const server = app.listen(PORT, () =>
+    console.log(
+      `http://127.0.0.1:${server.address().port}/search/kin?query=주식&display=10&start=1&sort=sim app listening on port ${server.address().port}!`
+    )
   );
-});
+}
+
+module.exports = app;
