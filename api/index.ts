@@ -1,8 +1,6 @@
 // 네이버 검색 API 예제 - 블로그 검색
-var express = require("express");
-var app = express();
-var client_id = "IZLWXNNEvUfR0qEmFrJC";
-var client_secret = "tPShelVvVU";
+const express = require("express");
+const app = express();
 
 app.get("/search/blog", function (req, res) {
   const { query, display, start, sort } = req.query;
