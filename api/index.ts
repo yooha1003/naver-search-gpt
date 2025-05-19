@@ -10,8 +10,8 @@ app.get("/search/blog", function (req, res) {
     url: api_url,
     qs: { query, display, start, sort },
     headers: {
-      "X-Naver-Client-Id": client_id,
-      "X-Naver-Client-Secret": client_secret,
+      "X-Naver-Client-Id": process.env.NAVER_CLIENT_ID,
+      "X-Naver-Client-Secret": process.env.NAVER_CLIENT_SECRET,
     },
   };
   request.get(options, function (error, response, body) {
@@ -33,8 +33,8 @@ app.get("/search/news", function (req, res) {
     url: api_url,
     qs: { query, display, start, sort },
     headers: {
-      "X-Naver-Client-Id": client_id,
-      "X-Naver-Client-Secret": client_secret,
+      "X-Naver-Client-Id": process.env.NAVER_CLIENT_ID,
+      "X-Naver-Client-Secret": process.env.NAVER_CLIENT_SECRET,
     },
   };
   request.get(options, function (error, response, body) {
@@ -56,8 +56,8 @@ app.get("/search/cafearticle", function (req, res) {
     url: api_url,
     qs: { query, display, start, sort },
     headers: {
-      "X-Naver-Client-Id": client_id,
-      "X-Naver-Client-Secret": client_secret,
+      "X-Naver-Client-Id": process.env.NAVER_CLIENT_ID,
+      "X-Naver-Client-Secret": process.env.NAVER_CLIENT_SECRET,
     },
   };
   request.get(options, function (error, response, body) {
@@ -79,8 +79,8 @@ app.get("/search/kin", function (req, res) {
     url: api_url,
     qs: { query, display, start, sort },
     headers: {
-      "X-Naver-Client-Id": client_id,
-      "X-Naver-Client-Secret": client_secret,
+      "X-Naver-Client-Id": process.env.NAVER_CLIENT_ID,
+      "X-Naver-Client-Secret": process.env.NAVER_CLIENT_SECRET,
     },
   };
   request.get(options, function (error, response, body) {
@@ -102,8 +102,8 @@ app.get("/search/webkr", function (req, res) {
     url: api_url,
     qs: { query, display, start },
     headers: {
-      "X-Naver-Client-Id": client_id,
-      "X-Naver-Client-Secret": client_secret,
+      "X-Naver-Client-Id": process.env.NAVER_CLIENT_ID,
+      "X-Naver-Client-Secret": process.env.NAVER_CLIENT_SECRET,
     },
   };
   request.get(options, function (error, response, body) {
@@ -125,8 +125,8 @@ app.get("/search/shop", function (req, res) {
     url: api_url,
     qs: { query, display, start, filter, exclude },
     headers: {
-      "X-Naver-Client-Id": client_id,
-      "X-Naver-Client-Secret": client_secret,
+      "X-Naver-Client-Id": process.env.NAVER_CLIENT_ID,
+      "X-Naver-Client-Secret": process.env.NAVER_CLIENT_SECRET,
     },
   };
   request.get(options, function (error, response, body) {
@@ -148,8 +148,8 @@ app.get("/search/doc", function (req, res) {
     url: api_url,
     qs: { query, display, start },
     headers: {
-      "X-Naver-Client-Id": client_id,
-      "X-Naver-Client-Secret": client_secret,
+      "X-Naver-Client-Id": process.env.NAVER_CLIENT_ID,
+      "X-Naver-Client-Secret": process.env.NAVER_CLIENT_SECRET,
     },
   };
   request.get(options, function (error, response, body) {
