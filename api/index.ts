@@ -1,8 +1,8 @@
 // 네이버 검색 API 예제 - 블로그 검색
 var express = require("express");
 var app = express();
-var client_id = "PV6eAk_FaMciZboXnpWl";
-var client_secret = "7ODCRAiWUn";
+var client_id = "IZLWXNNEvUfR0qEmFrJC";
+var client_secret = "tPShelVvVU";
 
 app.get("/search/blog", function (req, res) {
   const { query, display, start, sort } = req.query;
@@ -165,8 +165,8 @@ app.get("/search/doc", function (req, res) {
   });
 });
 
-// app.listen(3000, function () {
-//   console.log(
-//     "http://127.0.0.1:3000/search/kin?query=주식&display=10&start=1&sort=sim app listening on port 3000!"
-//   );
-// });
+app.listen(3000, function () {
+  console.log(
+    "http://127.0.0.1:3000/search/kin?query=주식&display=10&start=1&sort=sim app listening on port 3000!"
+  );
+});
